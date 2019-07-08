@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TrocaPneuCreateDlg" widgetVar="TrocaPneuCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateTrocaPneuTitle}">
+            <h:form id="TrocaPneuCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{trocaPneuController.trocaPneuSelecionado != null}">
+                        <p:outputLabel value="#{bundle.CreateTrocaPneuLabel_dataTroca}" for="dataTroca" />
+                        <p:calendar id="dataTroca" pattern="MM/dd/yyyy" value="#{trocaPneuController.trocaPneuSelecionado.dataTroca}" title="#{bundle.EditTrocaPneuTitle_dataTroca}" required="true" requiredMessage="#{bundle.EditTrocaPneuRequiredMessage_dataTroca}" showOn="button"/>
+                        
+                        <p:outputLabel value="#{bundle.CreateTrocaPneuLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{trocaPneuController.trocaPneuSelecionado.id}" title="#{bundle.CreateTrocaPneuTitle_id}" />
+                        
+                        
+                        <p:outputLabel for="veiculo" value="Veiculo:" />
+                        <h:selectOneMenu id="veiculo"  
+                                         value="#{veiculoController.selected != null}" required="true"  
+                                         requiredMessage="Valor é obrigatório">  
+                            <f:selectItem itemValue="#{veiculoController.selected.id}" itemLabel="Selecione um veiculo"/>  
+                            <f:selectItems value="#{veiculoController.selected.placa}" />  
+                        </h:selectOneMenu>  
+
+                        <p:outputLabel for="empresa" value="Empresa:" />
+                        <h:selectOneMenu id="empresa"  
+                                         value="#{empresaController.selected}" required="true"  
+                                         requiredMessage="Valor é obrigatório">  
+                                        <f:selectItem itemValue="" itemLabel="Selecione uma empresa"/>  
+                                        <f:selectItems value="#{empresaController.items}" var="item" itemLabel="#{item.nome}" itemValue="#{item}"/>  
+                        </h:selectOneMenu>  
+                        
+                        <p:outputLabel for="marca" value="Marca:" />
+                        <h:selectOneMenu id="marca"  
+                                         value="#{marcaController.selected}" required="true"  
+                                         requiredMessage="Valor é obrigatório">  
+                                        <f:selectItem itemValue="" itemLabel="Selecione uma marca"/>  
+                                        <f:selectItems value="#{marcaController.items}" var="item" itemLabel="#{item.nome}" itemValue="#{item}"/>  
+                        </h:selectOneMenu>  
+                        
+                        <p:outputLabel for="dimensao" value="Dimensao:" />
+                        <h:selectOneMenu id="dimensao"  
+                                         value="#{dimensaoController.selected}" required="true"  
+                                         requiredMessage="Valor é obrigatório">  
+                                        <f:selectItem itemValue="" itemLabel="Selecione uma dimensão"/>  
+                                        <f:selectItems value="#{dimensaoController.items}" var="item" itemLabel="#{item.dimensao}" itemValue="#{item}"/>  
+                        </h:selectOneMenu>  
+                    </p:panelGrid>
+                    
+                    <p:commandButton actionListener="#{trocaPneuController.create}" value="#{bundle.Save}" update="display,:TrocaPneuListForm:datalist,:growl" oncomplete="handleSubmit(args,'TrocaPneuCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TrocaPneuCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
